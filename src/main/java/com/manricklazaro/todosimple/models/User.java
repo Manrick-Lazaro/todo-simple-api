@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -44,8 +45,8 @@ public class User {
 
     private final String uuid;
 
-    // private List<Task> tasks = new ArrayList<Task>();
-
+    @OneToMany(mappedBy = "user")
+    private List<Task> tasks = new ArrayList<Task>();
 
     public User() {
         this.uuid = UUID.randomUUID().toString();
@@ -84,37 +85,13 @@ public class User {
         this.password = password;
     }
 
-    // metodo de comparação feita pelo professor.
-    // @Override
-    // public boolean equals(Object obj) {
-    //     if (obj == this)
-    //         return true;
+    public List<Task> getTasks() {
+        return this.tasks;
+    }
 
-    //     if (obj == null)
-    //         return false;
-
-    //     if (!(obj instanceof User)) 
-    //         return false;
-
-    //     User other = (User) obj;
-        
-    //     if (this.id == null)
-    //         if (other.id != null)
-    //             return false;
-    //         else if (!this.id.equals(other.id))
-    //             return false;
-    //     return Objects.equals(this.id, other.id) && Objects.equals(this.username, other.username)
-    //             && Objects.equals(this.password, other.password);
-    // }
-
-    // metodo de geração hash feita pelo professor.
-    // @Override
-    // public int hashCode() {
-    //     final int prime = 31;
-    //     int result = 1;
-    //     result = prime * result + ((this.id == null) ? 0 : this.id.hashCode());
-    //     return result;
-    // }
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
+    }
 
     @Override
     public boolean equals(Object obj) {
