@@ -14,6 +14,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
@@ -46,6 +47,7 @@ public class User {
     private final String uuid;
 
     @OneToMany(mappedBy = "user")
+    @JsonIgnore
     private List<Task> tasks = new ArrayList<Task>();
 
     public User() {
