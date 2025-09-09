@@ -6,26 +6,15 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.manricklazaro.todosimple.TodosimpleApplication;
 import com.manricklazaro.todosimple.models.User;
-import com.manricklazaro.todosimple.repositories.TaskRepository;
 import com.manricklazaro.todosimple.repositories.UserRepository;
 
 @Service
 public class UserService {
 
-    private final TodosimpleApplication todosimpleApplication;
-
     @Autowired
     private UserRepository userRepository;
-    
-    @Autowired
-    private TaskRepository taskRepository;
-
-    UserService(TodosimpleApplication todosimpleApplication) {
-        this.todosimpleApplication = todosimpleApplication;
-    }
-
+   
     public User findByID(long id) {
         Optional<User> user = this.userRepository.findById(id);
 
@@ -43,8 +32,6 @@ public class UserService {
         obj.setId(null);
 
         obj = this.userRepository.save(obj);
-
-        this.taskRepository.saveAll(obj.getTasks());
 
         return obj;
     }
