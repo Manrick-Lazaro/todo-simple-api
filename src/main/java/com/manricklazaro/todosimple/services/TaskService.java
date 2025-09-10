@@ -1,5 +1,6 @@
 package com.manricklazaro.todosimple.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -25,6 +26,11 @@ public class TaskService {
         return task.orElseThrow(() -> new RuntimeException(
             "Task not found, id: " + id + ", type: " + Task.class.getName()
         ));
+    }
+
+    public List<Task> findAllByUserId(Long userId){
+        List<Task> tasks = this.taskRepository.findByUser_id(userId);
+        return tasks;
     }
 
     @Transactional
