@@ -5,7 +5,10 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
 import com.manricklazaro.todosimple.models.User;
 import com.manricklazaro.todosimple.repositories.UserRepository;
 
@@ -19,8 +22,9 @@ public class UserService {
         Optional<User> user = this.userRepository.findById(id);
 
         // retorna o user se não tiver vazio
-        return user.orElseThrow( () -> new RuntimeException(
-            "User not found, id: " + id + ", type: " + User.class.getName()
+        return user.orElseThrow(() -> new ResponseStatusException(
+            HttpStatus.NOT_FOUND, 
+            "User not found, id: " + id
         ));
     }
 
