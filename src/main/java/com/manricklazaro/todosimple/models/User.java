@@ -38,7 +38,7 @@ public class User {
     @Size(groups = CreateUser.class, min = 2, max = 100)
     private String  username;
 
-    @JsonProperty(access = Access.WRITE_ONLY)
+    @JsonProperty(access = Access.WRITE_ONLY) // no lombok ignora o get pra essa prop
     @Column(name = "password", length = 60, nullable = false)
     @NotBlank(groups = {CreateUser.class, UpdateUser.class} )
     @Size(groups = {CreateUser.class, UpdateUser.class}, min = 8, max = 60)
@@ -85,10 +85,6 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public List<Task> getTasks() {
-        return this.tasks;
     }
 
     public void setTasks(List<Task> tasks) {
