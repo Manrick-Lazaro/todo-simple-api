@@ -5,12 +5,12 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import com.manricklazaro.todosimple.models.User;
 import com.manricklazaro.todosimple.repositories.UserRepository;
+import com.manricklazaro.todosimple.services.exceptions.DataBindingViolationException;
+import com.manricklazaro.todosimple.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class UserService {
@@ -22,8 +22,7 @@ public class UserService {
         Optional<User> user = this.userRepository.findById(id);
 
         // retorna o user se não tiver vazio
-        return user.orElseThrow(() -> new ResponseStatusException(
-            HttpStatus.NOT_FOUND, 
+        return user.orElseThrow(() -> new ObjectNotFoundException(
             "User not found, id: " + id
         ));
     }
@@ -55,7 +54,7 @@ public class UserService {
         try {
             this.userRepository.deleteById(id);
         } catch (Exception e) {
-            throw new RuntimeException("It is not possible to delete because there are other related entities.");
+            throw new DataBindingViolationException("It is not possible to delete because there are other related entities.");
         }
     }
 
